@@ -7,10 +7,28 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: black;
             margin: 0;
             padding: 20px;
             min-height: 100vh;
+            color: white;
+        }
+        .search-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        #search {
+            padding: 10px;
+            width: 300px;
+            border-radius: 25px;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 16px;
+            backdrop-filter: blur(10px);
+        }
+        #search::placeholder {
+            color: rgba(255, 255, 255, 0.5);
         }
         .container {
             display: grid;
@@ -20,11 +38,11 @@
             margin: 0 auto;
         }
         .column {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
             border-radius: 10px;
             padding: 20px;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
         }
         ul {
             list-style: none;
@@ -34,16 +52,17 @@
             margin: 10px 0;
         }
         button {
-            background: transparent;
+            background: rgba(255, 255, 255, 0.1);
             border: none;
             color: white;
             cursor: pointer;
-            font-size: 16px;
-            text-align: left;
+            font-size: 14px;
+            text-align: center;
             width: 100%;
-            padding: 5px;
-            border-radius: 5px;
+            padding: 12px 20px;
+            border-radius: 25px;
             transition: background 0.3s;
+            backdrop-filter: blur(5px);
         }
         button:hover {
             background: rgba(255, 255, 255, 0.2);
@@ -51,6 +70,9 @@
     </style>
 </head>
 <body>
+    <div class="search-container">
+        <input type="text" id="search" placeholder="Search games...">
+    </div>
     <div class="container">
         <div class="column">
             <ul>
@@ -1660,6 +1682,16 @@
                 })
                 .catch(err => console.error('Error loading game:', err));
         }
+
+        document.getElementById('search').addEventListener('input', function() {
+            const query = this.value.toLowerCase();
+            const lis = document.querySelectorAll('li');
+            lis.forEach(li => {
+                const btn = li.querySelector('button');
+                const text = btn.textContent.toLowerCase();
+                li.style.display = text.includes(query) ? '' : 'none';
+            });
+        });
     </script>
 </body>
 </html>
